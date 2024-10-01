@@ -21,8 +21,11 @@ public class Tree : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && treeState == TreeState.Open)
+        if (collision.tag == "Player")
         {
+            Vector2 collisionPosition = new Vector2(collision.GetComponent<Transform>().position.x, collision.GetComponent<Transform>().position.y);
+            Vector2 RepelledDirection = collisionPosition - new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y);
+            //collision.GetComponent<PlayerController>().PlayerRepelled(RepelledDirection.normalized);
             collision.GetComponent<PlayerController>().GetHit(atk);
         }
     }

@@ -26,7 +26,8 @@ public class TreeManager : MonoBehaviour
             float y1 = Random.Range(-8.5f, 8.2f);
             foreach (Vector2 prepos in treePos)
             {
-                while ((x1 <= prepos.x + 1.0f && x1 >= prepos.x - 1.0f) && (y1 <= prepos.y + 1.0f && y1 >= prepos.y - 1.0f))
+                Vector2 playerPos = new Vector2(GameObject.FindWithTag("Player").transform.position.x, GameObject.FindWithTag("Player").transform.position.y);
+                while ((x1 <= prepos.x + 1.0f && x1 >= prepos.x - 1.0f) && (y1 <= prepos.y + 1.0f && y1 >= prepos.y - 1.0f) && (x1 <= playerPos.x + 3f && x1 >= playerPos.x - 3f) && (y1 <= playerPos.y + 3f && y1 >= playerPos.y - 3f))
                 {
                     x1 = Random.Range(-12.5f, 12.5f);
                     y1 = Random.Range(-8.5f, 8.2f);

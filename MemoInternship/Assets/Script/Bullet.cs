@@ -15,39 +15,39 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 9.0f);
     }
 
-    public void SetatkValue(float atkValue)
-    {
-        this.atkValue = atkValue;
-    }
+    //public void SetatkValue(float atkValue)
+    //{
+    //    this.atkValue = atkValue;
+    //}
 
-    public void SetBulletSpeed(float bulletSpeed)
-    {
-        this.bulletSpeed = bulletSpeed;
-    }
+    //public void SetBulletSpeed(float bulletSpeed)
+    //{
+    //    this.bulletSpeed = bulletSpeed;
+    //}
 
-    public void SetShootPoint(Vector2 shootPoint)
-    {
-        this.shootPoint = shootPoint;
-    }
+    //public void SetShootPoint(Vector2 shootPoint)
+    //{
+    //    this.shootPoint = shootPoint;
+    //}
 
-    private void Update()
-    {
-        transform.Translate(shootPoint * bulletSpeed * Time.deltaTime);
-    }
+    //private void Update()
+    //{
+    //    transform.Translate(shootPoint * bulletSpeed * Time.deltaTime);
+    //}
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enamy")
+        if (collision.tag == "Enemy")
         {
             Destroy(this.gameObject);
             //Õâ±ßÒª×ö¿ÛÑª
             GameObject go = GameObject.Instantiate(bulletDestoryPrefab, transform.position, Quaternion.identity);
-            Destroy(go, 1.0f);
+            Destroy(go, 0.5f);
         }
         if (collision.tag == "Tree")
         {
             Destroy(this.gameObject);
             GameObject go = GameObject.Instantiate(bulletDestoryPrefab, transform.position, Quaternion.identity);
-            Destroy(go, 1.0f);
+            Destroy(go, 0.5f);
         }
     }
 }

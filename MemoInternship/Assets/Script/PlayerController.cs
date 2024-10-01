@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
 
-    public float Hp = 5.0f;
+    public float Hp = 10.0f;
 
     [Header("Attack")]
     public CanShoot canShoot = CanShoot.OK;
@@ -94,10 +94,6 @@ public class PlayerController : MonoBehaviour
                 mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 mousePosition.z = 0;
                 float fireAngle = Vector2.Angle(mousePosition - this.transform.position, Vector2.up);
-                if (mousePosition.x > this.transform.position.x)
-                {
-                    fireAngle = -fireAngle;
-                }
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
                 CurrentBulletNum -= 1;
                 if (CurrentBulletNum <= 0)
@@ -106,7 +102,6 @@ public class PlayerController : MonoBehaviour
                     BulletRecover();
                 }
                 go.GetComponent<Rigidbody2D>().velocity = ((mousePosition - transform.position).normalized * bulletSpeed);
-                go.transform.eulerAngles = new Vector3(0, 0, fireAngle);
                 shootTime = 0.0f;
             }
         }
@@ -231,11 +226,19 @@ public class PlayerController : MonoBehaviour
     }
     public void GetHit(float atk)
     {
-        Hp -= atk;
+        StartCoroutine("hitFlash");
         if (Hp <= 0)
         {
             TranslateToDie();
         }
+    }
+
+    IEnumerator hitFlash()
+    {
+        Hp -= 1;
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.75f);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
 
