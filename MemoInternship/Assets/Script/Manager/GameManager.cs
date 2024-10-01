@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
+
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager instance { get; private set; }
+    public List<Tilemap> BackGroundList;
+    public float GameTime = 20.0f;
+    private void Awake()
     {
-        
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    void CreateBackGround()
     {
-        
+
+    }
+    public void Update()
+    {
+
     }
 }

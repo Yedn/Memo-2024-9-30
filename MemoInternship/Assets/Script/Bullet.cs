@@ -6,14 +6,13 @@ public class Bullet : MonoBehaviour
 {
     [Header("Bullet Seting")]
     public float atkValue = 2.5f;
-    public float bulletSpeed = 5.0f;
+    public float bulletSpeed = 10.0f;
     public GameObject bulletDestoryPrefab;
-
     public Vector2 shootPoint;
 
     public void Start()
     {
-        Destroy(bulletDestoryPrefab,9.0f);
+        Destroy(gameObject, 9.0f);
     }
 
     public void SetatkValue(float atkValue)
@@ -22,7 +21,7 @@ public class Bullet : MonoBehaviour
     }
 
     public void SetBulletSpeed(float bulletSpeed)
-    { 
+    {
         this.bulletSpeed = bulletSpeed;
     }
 
@@ -41,10 +40,12 @@ public class Bullet : MonoBehaviour
         {
             Destroy(this.gameObject);
             //Õâ±ßÒª×ö¿ÛÑª
-            if (collision.tag == "Tree")
-            {
-                Destroy(this.gameObject);
-            }
+            GameObject go = GameObject.Instantiate(bulletDestoryPrefab, transform.position, Quaternion.identity);
+            Destroy(go, 1.0f);
+        }
+        if (collision.tag == "Tree")
+        {
+            Destroy(this.gameObject);
             GameObject go = GameObject.Instantiate(bulletDestoryPrefab, transform.position, Quaternion.identity);
             Destroy(go, 1.0f);
         }
