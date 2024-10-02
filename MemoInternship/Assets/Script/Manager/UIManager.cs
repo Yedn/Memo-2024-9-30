@@ -27,21 +27,21 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         ShowRestTime();
-        //if (GameManager.instance.restTime > 0)
-        //{
-        //    ShowRestTime();
-        //}
     }
     public void ShowRestTime()
     {
         int M = (int)(GameManager.instance.restTime / 60);
         float S = GameManager.instance.restTime % 60;
         timer += Time.deltaTime;
-        if (timer >= 1f)
+        if (timer >= 1f && GameManager.instance.restTime >= 0)
         {
             timer = 0;
             GameManager.instance.restTime -= 1;
             RestTimeText.text = M + ":" + string.Format("{0:00}", S);
+        }
+        if (GameManager.instance.restTime == 0 && GameManager.instance.gameResult != GameResult.Win)
+        {
+            GameManager.instance.GameWin();
         }
     }
 

@@ -247,11 +247,20 @@ public class PlayerController : MonoBehaviour
     }
     public void GetHit(float atk)
     {
-        StartCoroutine("hitFlash");
-        if (Hp <= 0)
+        if (playerstate == Playerstate.game)
         {
-            TranslateToDie();
+            StartCoroutine("hitFlash");
+            if (Hp <= 0)
+            {
+                TranslateToDie();
+                if (GameManager.instance.restTime > 0)
+                {
+                    GameManager.instance.gameResult = GameResult.Lose;
+                    GameManager.instance.GameLose();
+                }
+            }
         }
+
     }
     IEnumerator hitFlash()
     {
