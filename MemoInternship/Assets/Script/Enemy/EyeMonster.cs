@@ -16,20 +16,18 @@ public class EyeMonster : EnemyClass
     public float shootDuration = 5.0f;
     public float shootTime = 0.0f;
 
-    private GameObject direction;
-    public float distance;
-
     void Start()
     {
         enemyType = EnemyType.EyeMonster;
         EnemyHp = 8.0f;
         EnemyAtk = 1.0f;
-        MoveSpeed = 3.5f;
+        MoveSpeed = 2.5f;
     }
 
     void Update()
     {
-        GetTarget();
+        FindDistance();
+        SetState();
         switch (enemyState)
         {
             case (EnemyState.walk):
@@ -55,10 +53,8 @@ public class EyeMonster : EnemyClass
         }
     }
 
-    public void GetTarget()
+    private void SetState()
     {
-        direction = GameObject.FindWithTag("Player");
-        distance = (direction.GetComponent<Transform>().position - EyeMonsterTransform.position).magnitude;
         if (enemyState != EnemyState.die)
         {
             if (distance <= MaxRadius && distance > MinRadius)
@@ -81,11 +77,11 @@ public class EyeMonster : EnemyClass
         Vector3 target = (direction.transform.position - EyeMonsterTransform.position);
         if (target.x > EyeMonsterTransform.position.x)
         {
-            eyeMonster.GetComponent<SpriteRenderer>().flipX = false;
+            eyeMonster.GetComponent<SpriteRenderer>().flipX = true;
         }
         else
         {
-            eyeMonster.GetComponent<SpriteRenderer>().flipX = true;
+            eyeMonster.GetComponent<SpriteRenderer>().flipX = false;
         }
         EyeMonsterTransform.Translate((target.normalized) * MoveSpeed * Time.deltaTime);
     }
@@ -95,6 +91,16 @@ public class EyeMonster : EnemyClass
         if (distance < MaxRadius)
         {
             enemyState = EnemyState.walk;
+        }
+    }
+
+    public override void GetHit(float AtkValue)
+    {
+        EnemyHp -= AtkValue;
+        StartCoroutine("hitFlash");
+        if (EnemyHp <= 0)
+        {
+            enemyState = EnemyState.die;
         }
     }
 
@@ -115,20 +121,10 @@ public class EyeMonster : EnemyClass
     {
         if (collision.tag == "Bullet")
         {
-            EnemyHp -= collision.GetComponent<Bullet>().atkValue;
-            StartCoroutine("hitFlash");
-            if (EnemyHp <= 0)
-            {
-                enemyState = EnemyState.die;
-            }
+            GetHit(collision.GetComponent<Bullet>().atkValue);
         }
     }
-    IEnumerator hitFlash()
-    {
-        this.GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(0.5f);
-        this.GetComponent<SpriteRenderer>().color = Color.white;
-    }
+
     public override void EnemyDie()
     {
         this.GetComponent<Animator>().SetTrigger("Die");

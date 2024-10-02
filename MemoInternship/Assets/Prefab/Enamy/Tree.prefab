@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3034220663193633878}
   - component: {fileID: 2504108286111568951}
-  - component: {fileID: 9194712082828618365}
   - component: {fileID: 6130960927830344066}
   - component: {fileID: 2736843079352750215}
   - component: {fileID: 5134566956143349898}
+  - component: {fileID: 8229749791818649909}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Tree
@@ -89,23 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9194712082828618365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3107160204596126150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de5ae2cd3c858fe4eb8108f65ea719e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tree: {fileID: 3107160204596126150}
-  circle: {fileID: 3794037226500248698}
-  atk: 0.5
-  treeState: 0
-  detectionRadius: 5
 --- !u!70 &6130960927830344066
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -189,6 +172,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8229749791818649909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107160204596126150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5ae2cd3c858fe4eb8108f65ea719e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tree: {fileID: 3107160204596126150}
+  circle: {fileID: 3794037226500248698}
+  atk: 0.1
+  treeState: 0
+  detectionRadius: 1.5
+  atkTime: 0
+  atkDuration: 3
 --- !u!1 &3794037226500248698
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +258,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.25
+  m_Radius: 2
 --- !u!114 &3006536335004559677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,5 +272,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tree: {fileID: 3107160204596126150}
-  getTree: {fileID: 9194712082828618365}
+  getTree: {fileID: 8229749791818649909}
   ccollider: {fileID: 7031729625177859226}

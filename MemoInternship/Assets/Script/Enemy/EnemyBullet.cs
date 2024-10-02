@@ -12,6 +12,7 @@ public class EnemyBullet : MonoBehaviour
 
     public void Start()
     {
+        bulletSpeed = 7.5f;
         Destroy(gameObject, 9.0f);
     }
 
@@ -19,8 +20,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            
-            Debug.Log("BE SHOOT");
+            Debug.Log("Get Hit Form: EyeMonster");
             Destroy(this.gameObject);
             GameObject go = GameObject.Instantiate(bulletDestoryPrefab,this.transform.position,Quaternion.identity);
             collision.GetComponent<PlayerController>().GetHit(atkValue);

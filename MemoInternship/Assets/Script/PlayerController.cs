@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -27,8 +28,8 @@ public class PlayerController : MonoBehaviour
     public Bullet bulletPrefab;
     public float bulletSpeed = 10.0f;
     public int CurrentBulletNum;
-    public float BulletRecoverDuration = 0.2f;
-
+    public float BulletRecoverDuration = 0.5f;
+    public float BulletRecoverCurrentTime = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +72,11 @@ public class PlayerController : MonoBehaviour
 
     public void DieUpdate()
     {
-
+        if (GameManager.instance.restTime > 0)
+        {
+            GameManager.instance.gameResult = GameResult.Lose;
+            GameManager.instance.GameLose();
+        }
     }
 
     public void GameingUpdate()
@@ -79,8 +84,8 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
         WeaponMove();
         BulletRecover();
-        Attack();
         LookAt();
+        Attack();
     }
 
     public void Attack()
@@ -112,30 +117,46 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("r") || CurrentBulletNum == 0)
         {
             canShoot = CanShoot.NotOK;
-            while (CurrentBulletNum < MaxBulletNum)
+            //BulletRecoverCurrentTime = 0.0f;
+            if (CurrentBulletNum < MaxBulletNum)
             {
                 StartCoroutine("RecoverBullet");
-                if (CurrentBulletNum > 0 && Input.GetMouseButtonDown(0))
-                {
-                    canShoot = CanShoot.OK;
-                    break;
-                }
             }
+
+            //while (CurrentBulletNum < MaxBulletNum)
+            //{
+            //    //BulletRecoverCurrentTime += Time.deltaTime;
+            //    //if (BulletRecoverCurrentTime >= BulletRecoverDuration)
+            //    //{
+            //    //    CurrentBulletNum += 1;
+            //    //    BulletRecoverCurrentTime = 0.0f;
+            //    //}
+            //    StartCoroutine("RecoverBullet");
+            //    if (CurrentBulletNum > 0 && Input.GetMouseButtonDown(0))
+            //    {
+            //        canShoot = CanShoot.OK;
+            //        break;
+            //    }
+            //}
             canShoot = CanShoot.OK;
         }
     }
 
     IEnumerator RecoverBullet()
     {
-        CurrentBulletNum += 1;
-        yield return new WaitForSeconds(5.0f);
+        //float waitTime = BulletRecoverDuration * (MaxBulletNum - CurrentBulletNum);
+        if ((CurrentBulletNum > 0 && Input.GetMouseButtonDown(0)) || CurrentBulletNum == MaxBulletNum)
+        {
+            yield break;
+        }
+        yield return new WaitForSeconds(BulletRecoverDuration);
+        CurrentBulletNum +=1;
     }
 
     public void WeaponMove()
     {
         weapon.GetComponent<Transform>().position = new Vector3(0.068f, 0, 0) + playerTransform.position;
     }
-
     public void PlayerMove()
     {
         if (Input.GetKey("w") && Input.GetKey("a"))
@@ -232,10 +253,10 @@ public class PlayerController : MonoBehaviour
             TranslateToDie();
         }
     }
-
     IEnumerator hitFlash()
     {
         Hp -= 1;
+        UIManager.Instance.ChangeHpUI(Hp);
         this.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(0.75f);
         this.GetComponent<SpriteRenderer>().color = Color.white;

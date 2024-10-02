@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 897501892063568703}
   - component: {fileID: 5035382779470804637}
-  - component: {fileID: 4516037629568210429}
   - component: {fileID: 4734680909240876166}
   - component: {fileID: 5175007189754674852}
   - component: {fileID: 72057684641044671}
+  - component: {fileID: 8288878746304794588}
   m_Layer: 0
   m_Name: BrainMonster
   m_TagString: Enemy
@@ -88,27 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4516037629568210429
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3884540758699458740}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 893fed8976b35ee4bb7113368daab177, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4734680909240876166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +104,8 @@ MonoBehaviour:
   EnemyAtk: 0
   enemyState: 0
   enemyType: 0
+  direction: {fileID: 0}
+  distance: 0
   brainMonster: {fileID: 3884540758699458740}
   BrainMonsterTransform: {fileID: 897501892063568703}
   MoveSpeed: 0
@@ -190,3 +171,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01999191, y: -0.001738344}
   m_Size: {x: 0.18220077, y: 0.3821854}
   m_Direction: 0
+--- !u!95 &8288878746304794588
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884540758699458740}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 893fed8976b35ee4bb7113368daab177, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

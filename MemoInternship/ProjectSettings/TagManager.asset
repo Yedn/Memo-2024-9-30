@@ -8,6 +8,9 @@ TagManager:
   - Detect
   - Enemy
   - Bullet
+  - EnemyBullet
+  - Heart
+  - NullHeart
   layers:
   - Default
   - TransparentFX

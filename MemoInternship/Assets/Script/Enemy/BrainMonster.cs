@@ -8,17 +8,23 @@ public class BrainMonster : EnemyClass
     public GameObject brainMonster;
     public Transform BrainMonsterTransform;
     public float MoveSpeed;
+
+    public float AttackDuration = 3.0f;
+    public float AttackTime = 0.0f;
     void Start()
     {
+        enemyState = EnemyState.walk;
+        direction = GameObject.FindWithTag("Player");
         enemyType = EnemyType.BrainMonster;
         EnemyHp = 15.0f;
         EnemyAtk = 2.0f;
-        MoveSpeed = 2.0f;
+        MoveSpeed = 3.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        FindDistance();
         switch (enemyState)
         {
             case (EnemyState.walk):
@@ -41,14 +47,13 @@ public class BrainMonster : EnemyClass
 
     public override void EnemyWalk()
     {
-        GameObject target = GameObject.FindGameObjectWithTag("Player");
-        if (target == null)
+        if (direction == null)
         {
             Debug.Log("ERROR");
             return;
         }
-        Vector3 direction = (target.transform.position - BrainMonsterTransform.position);
-        if (target.transform.position.x > BrainMonsterTransform.position.x)
+        Vector3 target = (direction.transform.position - BrainMonsterTransform.position);
+        if (direction.transform.position.x > BrainMonsterTransform.position.x)
         {
             brainMonster.GetComponent<SpriteRenderer>().flipX = false;
         }
@@ -56,19 +61,17 @@ public class BrainMonster : EnemyClass
         {
             brainMonster.GetComponent<SpriteRenderer>().flipX = true;
         }
-        BrainMonsterTransform.Translate((direction.normalized) * MoveSpeed * Time.deltaTime);
-        if (direction.magnitude < 0.05f)
+        BrainMonsterTransform.Translate((target.normalized) * MoveSpeed * Time.deltaTime);
+        if (distance < 0.05f)
         {
             enemyState = EnemyState.attack;
         }
     }
     public override void EnemyAttack()
     {
-        GameObject target = GameObject.FindGameObjectWithTag("Player");
-        if (target)
+        if (direction)
         {
-            Vector3 direction = (target.transform.position - BrainMonsterTransform.position);
-            if (direction.magnitude >= 0.5f)
+            if (distance >= 0.5f)
             {
                 enemyState = EnemyState.walk;
             }
@@ -81,29 +84,34 @@ public class BrainMonster : EnemyClass
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AttackTime = AttackDuration;
         if (collision.tag == "Player")
         {
-            Vector2 collisionPosition = new Vector2(collision.GetComponent<Transform>().position.x, collision.GetComponent<Transform>().position.y);
-            Vector2 RepelledDirection = collisionPosition - new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y);
-            //collision.GetComponent<PlayerController>().PlayerRepelled(RepelledDirection.normalized);
-            collision.GetComponent<PlayerController>().GetHit(EnemyAtk);
+            AttackTime += Time.deltaTime;
+            while (AttackTime >= AttackDuration)
+            {
+                Debug.Log("Get Hit Form: BrainMonster");
+                Vector2 collisionPosition = new Vector2(collision.GetComponent<Transform>().position.x, collision.GetComponent<Transform>().position.y);
+                Vector2 RepelledDirection = collisionPosition - new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y);
+                //collision.GetComponent<PlayerController>().PlayerRepelled(RepelledDirection.normalized);
+                collision.GetComponent<PlayerController>().GetHit(EnemyAtk);
+                AttackTime = 0.0f;
+            }
         }
         if (collision.tag == "Bullet")
         {
-            EnemyHp -= collision.GetComponent<Bullet>().atkValue;
-            StartCoroutine("hitFlash");
-            if (EnemyHp <= 0)
-            {
-                enemyState = EnemyState.die;
-            }
+            GetHit(collision.GetComponent<Bullet>().atkValue);
         }
     }
 
-    IEnumerator hitFlash()
+    public override void GetHit(float AtkValue)
     {
-        this.GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(0.5f);
-        this.GetComponent<SpriteRenderer>().color = Color.white;
+        EnemyHp -= AtkValue;
+        StartCoroutine("hitFlash");
+        if (EnemyHp <= 0)
+        {
+            enemyState = EnemyState.die;
+        }
     }
 
     public override void EnemyDie()

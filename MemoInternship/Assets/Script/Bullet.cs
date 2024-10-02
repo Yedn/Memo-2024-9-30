@@ -14,26 +14,6 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject, 9.0f);
     }
-
-    //public void SetatkValue(float atkValue)
-    //{
-    //    this.atkValue = atkValue;
-    //}
-
-    //public void SetBulletSpeed(float bulletSpeed)
-    //{
-    //    this.bulletSpeed = bulletSpeed;
-    //}
-
-    //public void SetShootPoint(Vector2 shootPoint)
-    //{
-    //    this.shootPoint = shootPoint;
-    //}
-
-    //private void Update()
-    //{
-    //    transform.Translate(shootPoint * bulletSpeed * Time.deltaTime);
-    //}
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
