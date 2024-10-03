@@ -54,7 +54,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204144721750816874}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -114,6 +114,21 @@ MonoBehaviour:
   - {fileID: 3454262652269324531, guid: fb3ba75c2ef46f240969a7420caf8db8, type: 3}
   - {fileID: 3355745403192992225, guid: ddcf31600f242f64f88f624304df5a60, type: 3}
   MonsterNumber: 0
+  MapPos: {x: 0, y: 0, z: 0}
+  SameLineMap:
+  - {fileID: 1204144721750816874}
+  - {fileID: 0}
+  - {fileID: 0}
+  SameVerticalMap:
+  - {fileID: 1204144721750816874}
+  - {fileID: 0}
+  - {fileID: 0}
+  MainCam: {fileID: 0}
+  UnitWidth: 28
+  UnitHight: 20
+  TotalWidth: 84
+  TotalHeight: 60
+  UnitNum: 3
 --- !u!1 &5911022667474729630
 GameObject:
   m_ObjectHideFlags: 0

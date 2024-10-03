@@ -17,19 +17,22 @@ public class CreateManager : MonoBehaviour
     public List<GameObject> MonsterPrefabList;
     public int MonsterNumber;
 
+    public Vector3 MapPos;
+
     public List<GameObject> SameLineMap;     //同一行
     public List<GameObject> SameVerticalMap; //同一列
     public GameObject MainCam;
-    public float UnitWidth = 28;
-    public float UnitHight = 20;
-    public float TotalWidth = 28 * 3;
-    public float TotalHeight = 20 * 3;
+    public int UnitWidth = 28;
+    public int UnitHight = 20;
+    public int TotalWidth = 28 * 3;
+    public int TotalHeight = 20 * 3;
     public int UnitNum = 3;
     // Start is called before the first frame update
     void Start()
     {
+        MapPos = transform.position;
         MainCam = GameObject.FindWithTag("MainCamera");
-        //CreateTree();
+        CreateTree();
         //CreateMonster();
     }
     public void Update()
@@ -41,18 +44,18 @@ public class CreateManager : MonoBehaviour
         TreeNumber = Random.Range(1, 6);
         for (int i = 0; i < TreeNumber; i++)
         {
-            float x1 = Random.Range(-12.5f, 12.5f);
-            float y1 = Random.Range(-8.5f, 8.2f);
+            float x1 = MapPos.x + Random.Range(-12.5f, 12.5f);
+            float y1 = MapPos.y + Random.Range(-8.5f, 8.2f);
             foreach (Vector2 prepos in CreatePos)
             {
                 Vector2 playerPos = new Vector2(GameObject.FindWithTag("Player").transform.position.x, GameObject.FindWithTag("Player").transform.position.y);
-                while ((x1 <= prepos.x + 1.0f && x1 >= prepos.x - 1.0f) && (y1 <= prepos.y + 1.0f && y1 >= prepos.y - 1.0f) && (x1 <= playerPos.x + 3f && x1 >= playerPos.x - 3f) && (y1 <= playerPos.y + 3f && y1 >= playerPos.y - 3f))
+                while ((new Vector2(x1, y1) - prepos).magnitude < 3.0f || ((new Vector2(x1, y1) - playerPos).magnitude < 3.0f))
                 {
-                    x1 = Random.Range(-12.5f, 12.5f);
-                    y1 = Random.Range(-8.5f, 8.2f);
+                    x1 = MapPos.x + Random.Range(-12.5f, 12.5f);
+                    y1 = MapPos.y + Random.Range(-8.5f, 8.2f);
                 }
             }
-            GameObject go = GameObject.Instantiate(treePrefab, new Vector3(x1, y1, 0), Quaternion.identity);
+            GameObject go = GameObject.Instantiate(treePrefab, (new Vector3(x1, y1, 0)), Quaternion.identity);
             treeList.Add(go.GetComponent<Tree>());
             CreatePos.Add(new Vector2(x1, y1));
         }
@@ -60,8 +63,10 @@ public class CreateManager : MonoBehaviour
 
     public void ReCreateTree()
     {
-        foreach(Tree tree in treeList)
+        for (int i = treeList.Count-1; i >=0 ; i--)
         {
+            Tree tree = treeList[i];
+            treeList.Remove(tree);
             Destroy(tree.gameObject);
         }
         CreateTree();
@@ -70,15 +75,14 @@ public class CreateManager : MonoBehaviour
     public void MapMove()
     {
         Vector3 mapPos = this.transform.position;
-        if (MainCam.transform.position.x > this.transform.position.x + TotalWidth/2)
+        if (MainCam.transform.position.x > this.transform.position.x + TotalWidth / 2)
         {
-            //mapPos.x += TotalWidth;
-            //this.transform.position = mapPos;
             foreach (GameObject map in SameVerticalMap)
             {
-                mapPos = map.transform.position;
-                mapPos.x += TotalWidth;
-                map.transform.position = mapPos;
+                Vector3 OtherPos = map.transform.position;
+                OtherPos.x += TotalWidth;
+                map.transform.position = OtherPos;
+                map.GetComponent<CreateManager>().MapPos = map.transform.position;
                 map.GetComponent<CreateManager>().ReCreateTree();
             }
         }
@@ -86,35 +90,36 @@ public class CreateManager : MonoBehaviour
         {
             foreach (GameObject map in SameVerticalMap)
             {
-                mapPos = map.transform.position;
-                mapPos.x -= TotalWidth;
-                map.transform.position = mapPos;
+                Vector3 OtherPos = map.transform.position;
+                OtherPos.x -= TotalWidth;
+                map.transform.position = OtherPos;
+                map.GetComponent<CreateManager>().MapPos = map.transform.position;
                 map.GetComponent<CreateManager>().ReCreateTree();
             }
         }
 
         if (MainCam.transform.position.y > this.transform.position.y + TotalHeight / 2)
         {
-            //mapPos.x += TotalWidth;
-            //this.transform.position = mapPos;
             foreach (GameObject map in SameLineMap)
             {
-                mapPos = map.transform.position;
-                mapPos.y += TotalHeight;
-                map.transform.position = mapPos;map.GetComponent<CreateManager>().ReCreateTree();
+                Vector3 OtherPos = map.transform.position;
+                OtherPos.y += TotalHeight;
+                map.transform.position = OtherPos;
+                map.GetComponent<CreateManager>().MapPos = map.transform.position;
+                map.GetComponent<CreateManager>().ReCreateTree();
             }
-            
         }
         else if (MainCam.transform.position.y < this.transform.position.y - TotalHeight / 2)
         {
             foreach (GameObject map in SameLineMap)
             {
-                mapPos = map.transform.position;
-                mapPos.y -= TotalHeight;
-                map.transform.position = mapPos;map.GetComponent<CreateManager>().ReCreateTree();
-        }
+                Vector3 OtherPos = map.transform.position;
+                OtherPos.y -= TotalHeight;
+                map.transform.position = OtherPos;
+                map.GetComponent<CreateManager>().MapPos = map.transform.position;
+                map.GetComponent<CreateManager>().ReCreateTree();
             }
-            
+        }
     }
 
     public void CreateMonster()
@@ -141,7 +146,7 @@ public class CreateManager : MonoBehaviour
                     foreach (Vector2 prepos in CreatePos)
                     {
                         Vector2 playerPos = new Vector2(GameObject.FindWithTag("Player").transform.position.x, GameObject.FindWithTag("Player").transform.position.y);
-                        while (((x1 <= prepos.x + 0.5f && x1 >= prepos.x - 0.5f) && (y1 <= prepos.y + 2.0f && y1 >= prepos.y - 2.0f)) || ((new Vector2(x1,y1) - playerPos).magnitude <3.0f || (new Vector2(x1, y1) - playerPos).magnitude > 6.0f))
+                        while (((x1 <= prepos.x + 0.5f && x1 >= prepos.x - 0.5f) && (y1 <= prepos.y + 2.0f && y1 >= prepos.y - 2.0f)) || ((new Vector2(x1, y1) - playerPos).magnitude < 3.0f || (new Vector2(x1, y1) - playerPos).magnitude > 6.0f))
                         {
                             switch (LeftRightUpDown)
                             {

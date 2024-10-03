@@ -4,22 +4,25 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
+    [Header("HPUI")]
     public List<GameObject> HeartList;
-    public List<Image> HpUIList;
-    public Sprite NullHeartImage;
-
+    [Header("TimeUI")]
     public TextMeshProUGUI RestTimeText;
     public int restTime;
     public float timer;
-
+    [Header("ResultUI")]
     public TextMeshProUGUI WinText;
     public TextMeshProUGUI LoseText;
+
+    [Header("BulletUI")]
+    public TextMeshProUGUI BulletText;
     private void Awake()
     {
         Instance = this;
@@ -27,6 +30,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         ShowRestTime();
+        ChangeHpUI(GameObject.FindWithTag("Player").GetComponent<PlayerController>().Hp);
     }
     public void ShowRestTime()
     {
@@ -42,6 +46,15 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.restTime == 0 && GameManager.instance.gameResult != GameResult.Win)
         {
             GameManager.instance.GameWin();
+        }
+    }
+
+    public void BulletNumUI(int Num)
+    {
+        BulletText.text = Num.ToString();
+        if (Num == 0)
+        {
+            BulletText.color = Color.red;
         }
     }
 
@@ -66,13 +79,9 @@ public class UIManager : MonoBehaviour
     public void ChangeHpUI(float currentHp)
     {
         int HpNum = (int)currentHp;
-        if (HpNum < HpUIList.Count)
+        if (HpNum < HeartList.Count)
         {
-            Debug.Log(HpNum.ToString());
-            HpUIList[HpNum].sprite.GetComponent<Animator>().SetTrigger("Null");
-            HpUIList[HpNum].sprite = NullHeartImage;
-            //HeartList[HpNum].GetComponent<Image>().sprite = NullHeartImage;
-            //HeartList[HpNum].GetComponent<Animator>().SetTrigger("Null");
+            HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
         }
     }
 }

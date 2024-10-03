@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public Bullet bulletPrefab;
     public float bulletSpeed = 10.0f;
     public int CurrentBulletNum;
-    public float BulletRecoverDuration = 1.0f;
+    public float BulletRecoverDuration = 4.0f;
     public float BulletRecoverCurrentTime = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMove();
         WeaponMove();
+        BulletRecover();
         LookAt();
         Attack();
     }
@@ -100,45 +101,67 @@ public class PlayerController : MonoBehaviour
                 float fireAngle = Vector2.Angle(mousePosition - this.transform.position, Vector2.up);
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
                 CurrentBulletNum -= 1;
+                UIManager.Instance.BulletNumUI(CurrentBulletNum);
                 if (CurrentBulletNum <= 0)
                 {
                     canShoot = CanShoot.NotOK;
-                    BulletRecover();
+                    BulletRecoverCurrentTime = 0.0f;
                 }
                 go.GetComponent<Rigidbody2D>().velocity = ((mousePosition - transform.position).normalized * bulletSpeed);
                 shootTime = 0.0f;
             }
         }
+        if (Input.GetKeyDown("r"))
+        {
+            canShoot = CanShoot.NotOK;
+            BulletRecoverCurrentTime = 0.0f;
+        }
     }
 
     public void BulletRecover()
     {
-        if ((Input.GetKeyDown(KeyCode.R) || CurrentBulletNum <= 0) && canShoot == CanShoot.NotOK && CurrentBulletNum < MaxBulletNum)//
+
+        if (canShoot == CanShoot.NotOK)
         {
-            Debug.Log("BulletNum:" + CurrentBulletNum.ToString());
-            StartCoroutine("RecoverBullet");
+            RecoverBullet_UsedDeltatime();
+            //Debug.Log("BulletNum:" + CurrentBulletNum.ToString());
+            //StartCoroutine("ReWrite_BulletRecover");
+            if ((CurrentBulletNum == MaxBulletNum) || (Input.GetMouseButtonDown(0) && CurrentBulletNum > 0))
+            {
+                canShoot = CanShoot.OK;
+            }
         }
     }
 
-    IEnumerator RecoverBullet()
+
+    public void RecoverBullet_UsedDeltatime()
     {
-        //canShoot = CanShoot.NotOK;
-        //yield return new WaitForSeconds(0.75f);
-        //CurrentBulletNum+=1;
-        
-        //if (Input.GetMouseButtonDown(0) || CurrentBulletNum >= MaxBulletNum)
-        //{
-        //    canShoot = CanShoot.OK;
-        //    yield break;
-        //}
-        float waitTime = BulletRecoverDuration * (MaxBulletNum - CurrentBulletNum);
-        if ((CurrentBulletNum > 0 && Input.GetMouseButtonDown(0)) || CurrentBulletNum == MaxBulletNum)
+        BulletRecoverCurrentTime += Time.deltaTime;
+        if (BulletRecoverCurrentTime > BulletRecoverDuration)
+        {
+            if (CurrentBulletNum < MaxBulletNum) 
+            {
+                CurrentBulletNum++;
+                UIManager.Instance.BulletNumUI(CurrentBulletNum);
+            }
+            else
+            {
+                canShoot = CanShoot.OK;
+            }
+            BulletRecoverCurrentTime = 0;
+        }
+    }
+
+    IEnumerator ReWrite_BulletRecover()
+    {
+
+        if (CurrentBulletNum >= MaxBulletNum)
         {
             canShoot = CanShoot.OK;
-            yield break;
+            yield return null;
         }
-        yield return new WaitForSeconds(BulletRecoverDuration);
-        CurrentBulletNum +=1;
+        CurrentBulletNum++;
+        yield return new WaitForSeconds(3.0f);
     }
 
     public void WeaponMove()
