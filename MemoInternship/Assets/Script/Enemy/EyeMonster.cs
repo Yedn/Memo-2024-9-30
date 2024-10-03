@@ -9,7 +9,7 @@ public class EyeMonster : EnemyClass
     public EnemyBullet BulletPrefab;
     public Transform EyeMonsterTransform;
     public float MoveSpeed;
-    public float MaxRadius = 7.5f;
+    public float MaxRadius = 10.0f;
     public float MinRadius = 3.0f;
     public float BulletSpeed = 3.0f;
 

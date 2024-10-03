@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public Bullet bulletPrefab;
     public float bulletSpeed = 10.0f;
     public int CurrentBulletNum;
-    public float BulletRecoverDuration = 0.5f;
+    public float BulletRecoverDuration = 1.0f;
     public float BulletRecoverCurrentTime = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMove();
         WeaponMove();
-        BulletRecover();
         LookAt();
         Attack();
     }
@@ -114,39 +113,28 @@ public class PlayerController : MonoBehaviour
 
     public void BulletRecover()
     {
-        if (Input.GetKeyDown("r") || CurrentBulletNum == 0)
+        if ((Input.GetKeyDown(KeyCode.R) || CurrentBulletNum <= 0) && canShoot == CanShoot.NotOK && CurrentBulletNum < MaxBulletNum)//
         {
-            canShoot = CanShoot.NotOK;
-            //BulletRecoverCurrentTime = 0.0f;
-            if (CurrentBulletNum < MaxBulletNum)
-            {
-                StartCoroutine("RecoverBullet");
-            }
-
-            //while (CurrentBulletNum < MaxBulletNum)
-            //{
-            //    //BulletRecoverCurrentTime += Time.deltaTime;
-            //    //if (BulletRecoverCurrentTime >= BulletRecoverDuration)
-            //    //{
-            //    //    CurrentBulletNum += 1;
-            //    //    BulletRecoverCurrentTime = 0.0f;
-            //    //}
-            //    StartCoroutine("RecoverBullet");
-            //    if (CurrentBulletNum > 0 && Input.GetMouseButtonDown(0))
-            //    {
-            //        canShoot = CanShoot.OK;
-            //        break;
-            //    }
-            //}
-            canShoot = CanShoot.OK;
+            Debug.Log("BulletNum:" + CurrentBulletNum.ToString());
+            StartCoroutine("RecoverBullet");
         }
     }
 
     IEnumerator RecoverBullet()
     {
-        //float waitTime = BulletRecoverDuration * (MaxBulletNum - CurrentBulletNum);
+        //canShoot = CanShoot.NotOK;
+        //yield return new WaitForSeconds(0.75f);
+        //CurrentBulletNum+=1;
+        
+        //if (Input.GetMouseButtonDown(0) || CurrentBulletNum >= MaxBulletNum)
+        //{
+        //    canShoot = CanShoot.OK;
+        //    yield break;
+        //}
+        float waitTime = BulletRecoverDuration * (MaxBulletNum - CurrentBulletNum);
         if ((CurrentBulletNum > 0 && Input.GetMouseButtonDown(0)) || CurrentBulletNum == MaxBulletNum)
         {
+            canShoot = CanShoot.OK;
             yield break;
         }
         yield return new WaitForSeconds(BulletRecoverDuration);
