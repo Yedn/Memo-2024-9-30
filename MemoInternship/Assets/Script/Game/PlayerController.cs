@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
             case Playerstate.pause:
                 {
 
+                    break;
                 }
                 break;
         }

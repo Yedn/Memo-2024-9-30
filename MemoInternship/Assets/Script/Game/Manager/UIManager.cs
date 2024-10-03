@@ -20,9 +20,10 @@ public class UIManager : MonoBehaviour
     [Header("ResultUI")]
     public TextMeshProUGUI WinText;
     public TextMeshProUGUI LoseText;
-
     [Header("BulletUI")]
     public TextMeshProUGUI BulletText;
+    [Header("LevelUI")]
+    public TextMeshProUGUI LevelText;
     private void Awake()
     {
         Instance = this;
@@ -83,5 +84,9 @@ public class UIManager : MonoBehaviour
         {
             HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
         }
+    }
+    public void ChangeLevelUI()
+    {
+        LevelText.text = "Level: " + GameManager.instance.CurrentLevel.ToString();
     }
 }

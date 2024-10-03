@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EnemyState {stop,walk,attack,die}
 public enum EnemyType {BrainMonster,EyeMonster,Boomer}
+
 public class EnemyClass : MonoBehaviour
 {
     public float EnemyHp;

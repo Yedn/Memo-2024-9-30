@@ -1616,6 +1616,14 @@ MonoBehaviour:
   player: {fileID: 1774578270}
   playerTransform: {fileID: 1774578273}
   MapPrefab: {fileID: 1204144721750816874, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
+  EnemyList: []
+  MonsterPrefabList:
+  - {fileID: 3355745403192992225, guid: ddcf31600f242f64f88f624304df5a60, type: 3}
+  - {fileID: 3884540758699458740, guid: e6ef65b10bea7a743a80abd436665762, type: 3}
+  - {fileID: 3454262652269324531, guid: fb3ba75c2ef46f240969a7420caf8db8, type: 3}
+  EnemyPosList: []
+  MonsterNumber: 0
+  MaxEnemyNum: 4
 --- !u!4 &1011003757
 Transform:
   m_ObjectHideFlags: 0
@@ -2448,13 +2456,6 @@ MonoBehaviour:
   - {fileID: 1803149124}
   - {fileID: 1608667218}
   - {fileID: 1727741908}
-  HpUIList:
-  - {fileID: 1778096358}
-  - {fileID: 2110076195}
-  - {fileID: 136209506}
-  - {fileID: 1544679848}
-  - {fileID: 235308878}
-  NullHeartImage: {fileID: 21300000, guid: 3ed207bb06465a74e8ecf3ca1712691a, type: 3}
   RestTimeText: {fileID: 1471306543}
   restTime: 0
   timer: 0
@@ -3550,14 +3551,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1627520621}
     - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
-      propertyPath: SameLineMap.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
-      propertyPath: SameLineMap.Array.data[0]
-      value: 
-      objectReference: {fileID: 1785359192}
-    - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
       propertyPath: SameLineMap.Array.data[1]
       value: 
       objectReference: {fileID: 885660992}
@@ -3566,14 +3559,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1029197259}
     - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
-      propertyPath: SameVerticalMap.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
-      propertyPath: SameVerticalMap.Array.data[0]
-      value: 
-      objectReference: {fileID: 1785359192}
-    - target: {fileID: 6038165731405958829, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
       propertyPath: SameVerticalMap.Array.data[1]
       value: 
       objectReference: {fileID: 629767023}
@@ -3581,10 +3566,6 @@ PrefabInstance:
       propertyPath: SameVerticalMap.Array.data[2]
       value: 
       objectReference: {fileID: 746311866}
-    - target: {fileID: 8593950271823556572, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
