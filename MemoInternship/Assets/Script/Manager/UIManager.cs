@@ -115,13 +115,16 @@ public class UIManager : MonoBehaviour
     public void ChangeHpUI(float currentHp)
     {
         int HpNum = (int)currentHp;
-        if (HpNum < HeartList.Count)
+        for (int i = 0;i<5;i++)
         {
-            HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
-        }
-        for (int i = 0; i < HpNum; i++)
-        {
-            HeartList[i].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Recover");
+            if (i < HpNum)
+            {
+                HeartList[i].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Recover");
+            }
+            else
+            {
+                HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
+            }
         }
     }
     public void ChangeLevelUI()

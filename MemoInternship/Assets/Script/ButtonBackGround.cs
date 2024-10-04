@@ -13,12 +13,10 @@ public class ButtonBackGround : MonoBehaviour
     public void OnMouseEnter()
     {
         anima.SetTrigger("In");
-        //做什么事都行
     }
     //鼠标离开
     public void OnMouseExit()
     {
         anima.SetTrigger("Exit");
-        //做什么事都行
     }
 }

@@ -101,8 +101,8 @@ public class Boomer : EnemyClass
     {
         GameManager.instance.EnemyList.Remove(this);
         Destroy(this.gameObject);
-        GameObject go = GameObject.Instantiate(BoomerUIPrefab, transform.position,Quaternion.identity);
+        GameObject go = GameObject.Instantiate(BoomerUIPrefab, transform.position, Quaternion.identity);
         Destroy(go, 0.5f);
     }
-    
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class ImageAnima : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+public class ImageAnima : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isIn;
 

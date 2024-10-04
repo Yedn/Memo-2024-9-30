@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
             NeedExperience += 5.0f;
         }
     }
-    
+
     public void SkillRecover()
     {
         if (skillTime < skillDurationTime)
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 mousePosition.z = 0;
-                
+
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
                 AudioManager.instance.PlayClip(Config.shoot);
 
@@ -175,13 +175,13 @@ public class PlayerController : MonoBehaviour
 
     public void Skill()
     {
-        for (; CurrentBulletNum >=0; CurrentBulletNum--)
+        for (; CurrentBulletNum >= 0; CurrentBulletNum--)
         {
             shootTime = 0.0f;
-            float angle = Random.Range(0,Mathf.PI);
-            Bullet go = GameObject.Instantiate(bulletPrefab,this.transform.position, Quaternion.identity);
-            go.GetComponent<Rigidbody2D>().velocity = ((new Vector3(Mathf.Cos(angle),Mathf.Sin(angle),0)).normalized * bulletSpeed);
-            while(shootTime < 0.5f)
+            float angle = Random.Range(0, Mathf.PI);
+            Bullet go = GameObject.Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+            go.GetComponent<Rigidbody2D>().velocity = ((new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0)).normalized * bulletSpeed);
+            while (shootTime < 0.5f)
             {
                 shootTime += Time.deltaTime;
             }
@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
 
         if (canShoot == CanShoot.NotOK)
         {
-            RecoverBullet_UsedDeltatime(); 
+            RecoverBullet_UsedDeltatime();
             if ((CurrentBulletNum == MaxBulletNum) || (Input.GetMouseButtonDown(0) && CurrentBulletNum > 0))
             {
                 canShoot = CanShoot.OK;
@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
         BulletRecoverCurrentTime += Time.deltaTime;
         if (BulletRecoverCurrentTime > BulletRecoverDuration)
         {
-            if (CurrentBulletNum < MaxBulletNum) 
+            if (CurrentBulletNum < MaxBulletNum)
             {
                 CurrentBulletNum++;
                 AudioManager.instance.PlayClip(Config.bullet_recover);

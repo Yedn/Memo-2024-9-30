@@ -22,7 +22,7 @@ public class EnemyBullet : MonoBehaviour
         {
             Debug.Log("Get Hit Form: EyeMonster");
             Destroy(this.gameObject);
-            GameObject go = GameObject.Instantiate(bulletDestoryPrefab,this.transform.position,Quaternion.identity);
+            GameObject go = GameObject.Instantiate(bulletDestoryPrefab, this.transform.position, Quaternion.identity);
             collision.GetComponent<PlayerController>().GetHit(atkValue);
             Destroy(go, 0.5f);
         }

@@ -20,7 +20,7 @@ public class Drops : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
             this.GetComponent<Animator>().SetTrigger("Free");
             Destroy(this, 0.5f);
@@ -49,7 +49,7 @@ public class Drops : MonoBehaviour
         if (CurrentTime >= StayTime)
         {
             this.GetComponent<Animator>().SetTrigger("Free");
-            Destroy(this,0.5f);
+            Destroy(this, 0.5f);
             CurrentTime = 0.0f;
         }
     }

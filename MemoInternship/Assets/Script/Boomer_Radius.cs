@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boomer_Radius : MonoBehaviour
 {
     public Boomer boomerBody;
-    public float EnemyAtk=2.0f;
+    public float EnemyAtk = 2.0f;
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (boomerBody.enemyState == EnemyState.attack)

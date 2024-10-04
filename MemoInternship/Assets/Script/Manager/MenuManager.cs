@@ -7,6 +7,6 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.instance.PlayBgm(Config.bgm);
+        //AudioManager.instance.PlayBgm(Config.bgm);
     }
 }

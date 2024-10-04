@@ -132,7 +132,7 @@ public class BrainMonster : EnemyClass
         this.GetComponent<Animator>().SetTrigger("Die");
         this.GetComponent<Collider2D>().enabled = false;
         BuildDrop();
-        Destroy(this.gameObject,0.5f);
+        Destroy(this.gameObject, 0.5f);
     }
 
 
