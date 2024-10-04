@@ -129,6 +129,7 @@ MonoBehaviour:
   DropsPrefabList:
   - {fileID: 9190362894288793932, guid: 7fbff1e2e56493c4785782956b139466, type: 3}
   - {fileID: 5716566548489925690, guid: bbb0ba8998303dc468b1cb40e0692ec2, type: 3}
+  - {fileID: 4834927966132047789, guid: d3938861dc80b784b93e0e48e08b6a79, type: 3}
   eyeMonster: {fileID: 3454262652269324531}
   BulletPrefab: {fileID: 8811333959704348869, guid: b71f1a44b5308e24ebcb817e87ec41e2, type: 3}
   EyeMonsterTransform: {fileID: 6726665654067735544}

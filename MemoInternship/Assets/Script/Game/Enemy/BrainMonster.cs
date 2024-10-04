@@ -91,9 +91,10 @@ public class BrainMonster : EnemyClass
             while (AttackTime >= AttackDuration)
             {
                 Debug.Log("Get Hit Form: BrainMonster");
+                collision.GetComponent<PlayerController>().GetHit(EnemyAtk);
+                AudioManager.instance.PlayClip(Config.brainmonster_attack);
                 Vector2 collisionPosition = new Vector2(collision.GetComponent<Transform>().position.x, collision.GetComponent<Transform>().position.y);
                 Vector2 RepelledDirection = collisionPosition - new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y);
-                collision.GetComponent<PlayerController>().GetHit(EnemyAtk);
                 AttackTime = 0.0f;
             }
         }
@@ -107,10 +108,10 @@ public class BrainMonster : EnemyClass
     {
         EnemyHp -= AtkValue;
         StartCoroutine("hitFlash");
-        if (EnemyHp <= 0)
+        if (EnemyHp <= 0 && enemyState != EnemyState.die)
         {
+            BuildDrop();
             enemyState = EnemyState.die;
-            direction.GetComponent<PlayerController>().HaveKillEnemy++;
         }
     }
 
@@ -127,7 +128,7 @@ public class BrainMonster : EnemyClass
         this.GetComponent<Animator>().SetTrigger("Die");
         this.GetComponent<Collider2D>().enabled = false;
         BuildDrop();
-        Destroy(this.gameObject,1.5f);
+        Destroy(this.gameObject,0.5f);
     }
 
 

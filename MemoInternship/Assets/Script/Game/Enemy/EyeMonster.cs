@@ -98,10 +98,10 @@ public class EyeMonster : EnemyClass
     {
         EnemyHp -= AtkValue;
         StartCoroutine("hitFlash");
-        if (EnemyHp <= 0)
+        if (EnemyHp <= 0 && enemyState != EnemyState.die)
         {
+            BuildDrop();
             enemyState = EnemyState.die;
-            direction.GetComponent<PlayerController>().HaveKillEnemy++;
         }
     }
 
@@ -138,7 +138,7 @@ public class EyeMonster : EnemyClass
         GameManager.instance.EnemyList.Remove(this);
         this.GetComponent<Animator>().SetTrigger("Die");
         this.GetComponent<Collider2D>().enabled = false;
-        BuildDrop();
+        
         Destroy(this.gameObject, 1.5f);
     }
 }

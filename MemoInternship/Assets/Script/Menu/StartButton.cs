@@ -7,21 +7,20 @@ using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
 {
-    public Image otherImage;
-    public Image startImage;
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        this.GetComponent<Image>().sprite = otherImage.sprite;
-        //做什么事都行
-    }
-    //鼠标离开
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        this.GetComponent<Image>().sprite = startImage.sprite;
-        //做什么事都行
-    }
     public void StartGame()
     {
+        AudioManager.instance.PlayClip(Config.btn_click);
         SceneManager.LoadScene("GameScene");
+    }
+    public void ReturnMenu()
+    {
+        AudioManager.instance.PlayClip(Config.btn_click);
+        SceneManager.LoadScene("MenuScene");
+    }
+    public void ExitGame()
+    {
+        AudioManager.instance.PlayClip(Config.btn_click);
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 }

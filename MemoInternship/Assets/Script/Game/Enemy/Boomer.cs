@@ -80,10 +80,10 @@ public class Boomer : EnemyClass
     {
         EnemyHp -= AtkValue;
         StartCoroutine("hitFlash");
-        if (EnemyHp <= 0)
+        if (EnemyHp <= 0 && enemyState != EnemyState.die)
         {
-            enemyState = EnemyState.attack;
-            direction.GetComponent<PlayerController>().HaveKillEnemy++;
+            BuildDrop();
+            enemyState = EnemyState.die;
         }
     }
 

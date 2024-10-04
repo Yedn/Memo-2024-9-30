@@ -165,6 +165,7 @@ MonoBehaviour:
   DropsPrefabList:
   - {fileID: 9190362894288793932, guid: 7fbff1e2e56493c4785782956b139466, type: 3}
   - {fileID: 5716566548489925690, guid: bbb0ba8998303dc468b1cb40e0692ec2, type: 3}
+  - {fileID: 4834927966132047789, guid: d3938861dc80b784b93e0e48e08b6a79, type: 3}
   moveSpeed: 4
   target: {x: 0, y: 0, z: 0}
   BoomerTransform: {fileID: 2016955344977644086}

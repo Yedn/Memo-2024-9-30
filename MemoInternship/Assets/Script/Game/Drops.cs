@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Drops : MonoBehaviour
 {
     public GameObject icon;
-    public float StayTime = 10.0f;
+    public float StayTime = 30f;
     public float CurrentTime;
     private void Start()
     {
@@ -46,10 +46,11 @@ public class Drops : MonoBehaviour
     public virtual void StayUpdate()
     {
         CurrentTime += Time.deltaTime;
-        if (CurrentTime > StayTime)
+        if (CurrentTime >= StayTime)
         {
             this.GetComponent<Animator>().SetTrigger("Free");
             Destroy(this,0.5f);
+            CurrentTime = 0.0f;
         }
     }
 }

@@ -22,6 +22,7 @@ public class QuitButton : MonoBehaviour
     }
     public void QuitGame()
     {
+        AudioManager.instance.PlayClip(Config.btn_click);
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }

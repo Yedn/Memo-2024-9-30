@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         gameState = GameState.Gameing;
         CreateEnemy_CircleWay();
+        AudioManager.instance.PlayBgm(Config.bgm);
     }
 
     public void Update()
@@ -48,19 +49,33 @@ public class GameManager : MonoBehaviour
         {
             Gameing();
         }
-
+        if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameState = GameState.Pause;
+            UIManager.Instance.ReturnToMenu();
+        }
+        if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameState = GameState.Gameing;
+            UIManager.Instance.ReturnToGame();
+        }
     }
 
     public void GameWin()
     {
+        AudioManager.instance.PlayClip(Config.win_music);
         UIManager.Instance.ShowWinText();
+        UIManager.Instance.ReturnToMenu();
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.pause;
         gameState = GameState.End;
     }
 
     public void GameLose()
     {
+        AudioManager.instance.PlayClip(Config.lose_music);
         UIManager.Instance.ShowLoseText();
+        UIManager.Instance.ReturnToMenu();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.pause;
         gameState = GameState.End;
     }
 

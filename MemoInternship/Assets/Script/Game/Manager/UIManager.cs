@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
     [Header("ResultUI")]
     public GameObject WinText;
     public GameObject LoseText;
+    public GameObject ConclusionText;
+    public Button ReturnButton;
+    public Button ExitButton;
     [Header("BulletUI")]
     public TextMeshProUGUI BulletText;
     [Header("LevelUI")]
@@ -69,6 +72,23 @@ public class UIManager : MonoBehaviour
         LoseText.SetActive(false);
     }
 
+    public void ReturnToMenu()
+    {
+        GameObject.Find("ReturnButton").SetActive(true);
+        GameObject.Find("ExitButton").SetActive(true);
+    }
+
+    public void ReturnToGame()
+    {
+        GameObject.Find("ReturnButton").SetActive(false);
+        GameObject.Find("ExitButton").SetActive(false);
+    }
+
+    public void ShowResult()
+    {
+        ConclusionText.GetComponent<Text>().text = "GetExperience : " + GameObject.FindWithTag("Player").GetComponent<PlayerController>().AllExperience.ToString() + " Round : " + GameManager.instance.CurrentLevel.ToString();
+        ConclusionText.SetActive(true);
+    }
     public void ShowWinText()
     {
         WinText.SetActive(true);
@@ -88,9 +108,13 @@ public class UIManager : MonoBehaviour
         {
             HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
         }
+        for(int i=0;i< HpNum;i++)
+        {
+            HeartList[i].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Recover");
+        }
     }
     public void ChangeLevelUI()
     {
-        LevelText.text = "Level: " + GameManager.instance.CurrentLevel.ToString();
+        LevelText.text = "Phace: " + GameManager.instance.CurrentLevel.ToString();
     }
 }

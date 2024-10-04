@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
 
     public void Start()
     {
+        atkValue = GameObject.FindWithTag("Player").GetComponent<PlayerController>().atkValue;
         Destroy(gameObject, 9.0f);
     }
     private void OnTriggerEnter2D(Collider2D collision)

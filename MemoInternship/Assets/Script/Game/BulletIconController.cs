@@ -8,9 +8,11 @@ public class BulletIconController : Drops
     {
         float currentBullet = GameObject.FindWithTag("Player").GetComponent<PlayerController>().CurrentBulletNum;
         float MaxBulletNum = GameObject.FindWithTag("Player").GetComponent<PlayerController>().MaxBulletNum;
+
         if (currentBullet < MaxBulletNum)
         {
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().CurrentBulletNum += 1;
+            AudioManager.instance.PlayClip(Config.bullet_recover);
         }
     }
 }

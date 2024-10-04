@@ -37,8 +37,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("PlayerLevel")]
     private int PlayerLevel = 1;
-    public int NeedKillEnemy = 10;
-    public int HaveKillEnemy = 0;
+
+    public float NeedExperience = 10.0f;
+    public float HaveExperience = 0.0f;
+    public float AllExperience = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -103,12 +105,20 @@ public class PlayerController : MonoBehaviour
 
     public void LevelUp()
     {
-        if (HaveKillEnemy == NeedKillEnemy)
+        if (NeedExperience <= HaveExperience)
         {
             PlayerLevel += 1;
-            Hp = 5;
-            HaveKillEnemy = 0;
-            NeedKillEnemy += 5;
+            if (Hp < 5)
+            {
+                Hp = 5;
+                AudioManager.instance.PlayClip(Config.hp_recover);
+            }
+            if (atkValue < 5.0f)
+            {
+                atkValue += 0.1f;
+            }
+            HaveExperience -= NeedExperience;
+            NeedExperience += 5.0f;
         }
     }
     
@@ -118,6 +128,11 @@ public class PlayerController : MonoBehaviour
         {
             skillTime += Time.deltaTime;
         }
+        if (skillTime >= skillDurationTime)
+        {
+            UIManager.Instance.BulletText.color = Color.yellow;
+        }
+
     }
     public void Attack()
     {
@@ -129,7 +144,10 @@ public class PlayerController : MonoBehaviour
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 mousePosition.z = 0;
+                
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
+                AudioManager.instance.PlayClip(Config.shoot);
+
                 CurrentBulletNum -= 1;
                 UIManager.Instance.BulletNumUI(CurrentBulletNum);
                 if (CurrentBulletNum <= 0)
@@ -150,7 +168,7 @@ public class PlayerController : MonoBehaviour
         {
             Skill();
             canShoot = CanShoot.NotOK;
-            BulletRecoverCurrentTime = 0.0f;
+            skillTime = 0.0f;
         }
     }
 
@@ -190,6 +208,7 @@ public class PlayerController : MonoBehaviour
             if (CurrentBulletNum < MaxBulletNum) 
             {
                 CurrentBulletNum++;
+                AudioManager.instance.PlayClip(Config.bullet_recover);
                 UIManager.Instance.BulletNumUI(CurrentBulletNum);
             }
             else
@@ -197,6 +216,19 @@ public class PlayerController : MonoBehaviour
                 canShoot = CanShoot.OK;
             }
             BulletRecoverCurrentTime = 0;
+        }
+    }
+
+    private void PlayWalkSound()
+    {
+        int soundplay = Random.Range(0, 2);
+        if (soundplay == 0)
+        {
+            AudioManager.instance.PlayClip(Config.walk_1);
+        }
+        else
+        {
+            AudioManager.instance.PlayClip(Config.walk_2);
         }
     }
 
@@ -211,29 +243,29 @@ public class PlayerController : MonoBehaviour
             playerTransform.Translate(new Vector3(-1, 1, 0) * speed * Time.deltaTime);
             animator.SetBool("Adown", true);
             animator.SetBool("Ddown", false);
-            //weapon.GetComponent<Transform>().Translate(new Vector3(-1, 1, 0) * speed * Time.deltaTime);
+            int soundplay = Random.Range(0, 2);
+            PlayWalkSound();
         }
         else if (Input.GetKey("w") && Input.GetKey("d"))
         {
             playerTransform.Translate(new Vector3(1, 1, 0) * speed * Time.deltaTime);
             animator.SetBool("Adown", false);
             animator.SetBool("Ddown", true);
-            //weapon.GetComponent<Transform>().Translate(new Vector3(1, 1, 0) * speed * Time.deltaTime);
+            PlayWalkSound();
         }
         else if (Input.GetKey("s") && Input.GetKey("d"))
         {
             playerTransform.Translate(new Vector3(-1, -1, 0) * speed * Time.deltaTime);
             animator.SetBool("Adown", false);
             animator.SetBool("Ddown", true);
-            //weapon.GetComponent<Transform>().Translate(new Vector3(-1, -1, 0) * speed * Time.deltaTime);
+            PlayWalkSound();
         }
         else if (Input.GetKey("s") && Input.GetKey("a"))
         {
             playerTransform.Translate(new Vector3(1, -1, 0) * speed * Time.deltaTime);
             animator.SetBool("Adown", true);
             animator.SetBool("Ddown", false);
-            //weapon.GetComponent<Transform>().Translate(new Vector3(1, -1, 0) * speed * Time.deltaTime);
-
+            PlayWalkSound();
         }
         else
         {
@@ -242,28 +274,28 @@ public class PlayerController : MonoBehaviour
                 playerTransform.Translate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
                 animator.SetBool("Adown", false);
                 animator.SetBool("Ddown", true);
-                //weapon.GetComponent<Transform>().Translate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
+                PlayWalkSound();
             }
             else if (Input.GetKey("s"))
             {
                 playerTransform.Translate(new Vector3(0, -1, 0) * speed * Time.deltaTime);
                 animator.SetBool("Adown", true);
                 animator.SetBool("Ddown", false);
-                //weapon.GetComponent<Transform>().Translate(new Vector3(0, -1, 0) * speed * Time.deltaTime);
+                PlayWalkSound();
             }
             else if (Input.GetKey("a"))
             {
                 playerTransform.Translate(new Vector3(-1, 0, 0) * speed * Time.deltaTime);
                 animator.SetBool("Adown", true);
                 animator.SetBool("Ddown", false);
-                //weapon.GetComponent<Transform>().Translate(new Vector3(-1, 0, 0) * speed * Time.deltaTime);
+                PlayWalkSound();
             }
             else if (Input.GetKey("d"))
             {
                 playerTransform.Translate(new Vector3(1, 0, 0) * speed * Time.deltaTime);
                 animator.SetBool("Adown", false);
                 animator.SetBool("Ddown", true);
-                //weapon.GetComponent<Transform>().Translate(new Vector3(1, 0, 0) * speed * Time.deltaTime);
+                PlayWalkSound();
             }
             else
             {
