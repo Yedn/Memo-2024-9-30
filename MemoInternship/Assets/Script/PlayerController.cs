@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         if (NeedExperience <= HaveExperience)
         {
+            AudioManager.instance.PlayClip(Config.levelup);
             PlayerLevel += 1;
             if (Hp < 5)
             {

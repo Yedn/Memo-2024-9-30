@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
         instance = this;
         restTime = totalTime;
         player = GameObject.FindWithTag("Player");
-        AudioManager.instance.PlayBgm(Config.bgm);
+
     }
 
     public void Start()
     {
+        AudioManager.instance.PlayBgm(Config.bgm);
         gameState = GameState.Gameing;
         CreateEnemy_CircleWay();
     }
@@ -53,16 +54,27 @@ public class GameManager : MonoBehaviour
         {
             Gameing();
         }
-        //if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    gameState = GameState.Pause;
-        //    UIManager.Instance.ReturnToMenu();
-        //}
-        //if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    gameState = GameState.Gameing;
-        //    UIManager.Instance.ReturnToGame();
-        //}
+        if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameState = GameState.Pause;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.pause;
+            foreach (EnemyClass enemy in EnemyList)
+            {
+                enemy.enemyState = EnemyState.pause;
+            }
+            UIManager.Instance.ReturnToMenu();
+        }
+        else if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameState = GameState.Gameing;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.game;
+
+            UIManager.Instance.ReturnToGame();
+            foreach (EnemyClass enemy in EnemyList)
+            {
+                enemy.enemyState = EnemyState.walk;
+            }
+        }
     }
 
     public void GameWin()

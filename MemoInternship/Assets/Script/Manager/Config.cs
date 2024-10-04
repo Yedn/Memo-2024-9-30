@@ -15,6 +15,6 @@ public class Config
     public const string hp_recover = "Audio/HpRecover";
     public const string bullet_recover = "Audio/BulletRecover";
     public const string get_experience = "Audio/GetExperience";
-
+    public const string levelup = "Audio/LevelUp";
     public const string brainmonster_attack = "Audio/BrainMonsterAttack";
 }

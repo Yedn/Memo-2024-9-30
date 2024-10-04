@@ -21,6 +21,6 @@ public class StartButton : MonoBehaviour
     {
         AudioManager.instance.PlayClip(Config.btn_click);
         UnityEditor.EditorApplication.isPlaying = false;
-        // Application.Quit();
+        // Application.Quit(); //<-Build的时候用的 在测试的时候注释掉
     }
 }

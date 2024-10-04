@@ -37,6 +37,7 @@ public class EyeMonster : EnemyClass
                 }
             case (EnemyState.attack):
                 {
+                    shootTime = 0;
                     EnemyAttack();
                     break;
                 }
@@ -52,6 +53,7 @@ public class EyeMonster : EnemyClass
                 }
         }
     }
+
 
     private void SetState()
     {
@@ -114,8 +116,9 @@ public class EyeMonster : EnemyClass
 
     public override void EnemyAttack()
     {
+
         shootTime += Time.deltaTime;
-        while (shootTime >= shootDuration)
+        while (shootTime >= shootDuration && enemyState == EnemyState.attack)
         {
             Vector3 target = direction.GetComponent<Transform>().position;
             target.z = 0;

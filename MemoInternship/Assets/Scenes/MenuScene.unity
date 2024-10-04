@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 97580247}
   - component: {fileID: 97580246}
   - component: {fileID: 97580245}
-  - component: {fileID: 97580244}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -143,18 +142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &97580244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97580243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fc48d103e9b97b4687506be182a88b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &97580245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -647,6 +634,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 407725705455157917, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
+      propertyPath: anima
+      value: 
+      objectReference: {fileID: 1471687250}
     - target: {fileID: 8124017264765327532, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
       propertyPath: m_Name
       value: ButtonBackGround (1)
@@ -1043,6 +1034,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b6eff71f45268e43bc79b9efa1de5e6, type: 3}
+--- !u!95 &908010202 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7388478493087845663, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
+  m_PrefabInstance: {fileID: 1521278904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203692894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1107,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1471687250 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7388478493087845663, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
+  m_PrefabInstance: {fileID: 720304972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1521278904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1119,6 +1120,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 407725705455157917, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
+      propertyPath: anima
+      value: 
+      objectReference: {fileID: 908010202}
     - target: {fileID: 8124017264765327532, guid: 571b12084c2cc884dad03efbb82939a8, type: 3}
       propertyPath: m_Name
       value: ButtonBackGround

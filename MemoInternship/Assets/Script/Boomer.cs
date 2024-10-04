@@ -42,6 +42,10 @@ public class Boomer : EnemyClass
                     EnemyDie();
                     break;
                 }
+            case (EnemyState.pause):
+                {
+                    break;
+                }
         }
     }
 

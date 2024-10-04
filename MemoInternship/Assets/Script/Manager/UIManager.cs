@@ -8,6 +8,7 @@ using UnityEngine.U2D;
 using UnityEngine.UI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
@@ -21,8 +22,9 @@ public class UIManager : MonoBehaviour
     public GameObject WinText;
     public GameObject LoseText;
     public GameObject ConclusionText;
-    public Button ReturnButton;
-    public Button ExitButton;
+    public GameObject ReturnButton;
+    public GameObject ExitButton;
+    public List<GameObject> ButtonBackGroundList;
     [Header("BulletUI")]
     public TextMeshProUGUI BulletText;
     [Header("LevelUI")]
@@ -70,18 +72,27 @@ public class UIManager : MonoBehaviour
     {
         WinText.SetActive(false);
         LoseText.SetActive(false);
+
     }
 
     public void ReturnToMenu()
     {
-        //GameObject.Find("ReturnButton").SetActive(true);
-        //GameObject.Find("ExitButton").SetActive(true);
+        ReturnButton.SetActive(true);
+        ExitButton.SetActive(true);
+        foreach (GameObject background in ButtonBackGroundList)
+        {
+            background.SetActive(true);
+        }
     }
 
     public void ReturnToGame()
     {
-        GameObject.Find("ReturnButton").SetActive(false);
-        GameObject.Find("ExitButton").SetActive(false);
+        ReturnButton.SetActive(false);
+        ExitButton.SetActive(false);
+        foreach (GameObject background in ButtonBackGroundList)
+        {
+            background.SetActive(false);
+        }
     }
 
     public void ShowResult()
@@ -108,7 +119,7 @@ public class UIManager : MonoBehaviour
         {
             HeartList[HpNum].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Null");
         }
-        for(int i=0;i< HpNum;i++)
+        for (int i = 0; i < HpNum; i++)
         {
             HeartList[i].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Recover");
         }

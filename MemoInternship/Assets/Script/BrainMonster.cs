@@ -42,6 +42,10 @@ public class BrainMonster : EnemyClass
                     EnemyDie();
                     break;
                 }
+            case (EnemyState.pause):
+                {
+                    break;
+                }
         }
     }
 
