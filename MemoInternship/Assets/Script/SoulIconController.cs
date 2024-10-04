@@ -13,7 +13,6 @@ public class SoulIconController : Drops
         if (currentHP <= MaxHp - 1)
         {
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().Hp += 1;
-            //UIManager.Instance.HeartList[(int)(currentHP)].transform.Find("Heart").gameObject.GetComponent<Animator>().SetTrigger("Recover");
             AudioManager.instance.PlayClip(Config.hp_recover);
         }
         else

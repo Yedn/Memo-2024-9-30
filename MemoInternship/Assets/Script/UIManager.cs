@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
             GameManager.instance.restTime -= 1;
             RestTimeText.text = M + ":" + string.Format("{0:00}", S);
         }
-        if (GameManager.instance.restTime == 0 && GameManager.instance.gameResult != GameResult.Win)
+        if (GameManager.instance.restTime == 0 && GameManager.instance.gameState == GameState.Gameing)
         {
             GameManager.instance.GameWin();
         }
@@ -74,8 +74,8 @@ public class UIManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        GameObject.Find("ReturnButton").SetActive(true);
-        GameObject.Find("ExitButton").SetActive(true);
+        //GameObject.Find("ReturnButton").SetActive(true);
+        //GameObject.Find("ExitButton").SetActive(true);
     }
 
     public void ReturnToGame()

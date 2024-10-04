@@ -19,7 +19,6 @@ public class Boomer : EnemyClass
         EnemyAtk = 3.0f;
         enemyType = EnemyType.Boomer;
         enemyState = EnemyState.walk;
-        
     }
 
     // Update is called once per frame

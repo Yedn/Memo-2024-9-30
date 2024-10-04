@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayBgm(Config.bgm);
+        //PlayBgm(Config.bgm);
     }
     public void PlayBgm(string path)
     {

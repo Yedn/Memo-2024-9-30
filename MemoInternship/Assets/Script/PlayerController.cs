@@ -332,11 +332,6 @@ public class PlayerController : MonoBehaviour
             if (Hp <= 0)
             {
                 TranslateToDie();
-                if (GameManager.instance.restTime > 0)
-                {
-                    GameManager.instance.gameResult = GameResult.Lose;
-                    GameManager.instance.GameLose();
-                }
             }
         }
 

@@ -33,7 +33,10 @@ public class CreateManager : MonoBehaviour
     }
     public void Update()
     {
-        MapMove();
+        if (GameManager.instance != null && GameManager.instance.gameState == GameState.Gameing)
+        {
+            MapMove();
+        }
     }
     public void CreateTree()
     {
@@ -59,7 +62,7 @@ public class CreateManager : MonoBehaviour
 
     public void ReCreateTree()
     {
-        for (int i = treeList.Count-1; i >=0 ; i--)
+        for (int i = treeList.Count - 1; i >= 0; i--)
         {
             Tree tree = treeList[i];
             treeList.Remove(tree);

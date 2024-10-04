@@ -138,7 +138,6 @@ public class EyeMonster : EnemyClass
         GameManager.instance.EnemyList.Remove(this);
         this.GetComponent<Animator>().SetTrigger("Die");
         this.GetComponent<Collider2D>().enabled = false;
-        
         Destroy(this.gameObject, 1.5f);
     }
 }

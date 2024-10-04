@@ -9,7 +9,7 @@ public class StartButton : MonoBehaviour
 {
     public void StartGame()
     {
-        AudioManager.instance.PlayClip(Config.btn_click);
+        //AudioManager.instance.PlayClip(Config.btn_click);
         SceneManager.LoadScene("GameScene");
     }
     public void ReturnMenu()
@@ -21,6 +21,6 @@ public class StartButton : MonoBehaviour
     {
         AudioManager.instance.PlayClip(Config.btn_click);
         UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+        // Application.Quit();
     }
 }

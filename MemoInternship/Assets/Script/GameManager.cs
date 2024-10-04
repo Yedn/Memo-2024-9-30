@@ -6,8 +6,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public enum GameState { Gameing,Pause,End}
-public enum GameResult { Unknow,Win,Lose}
+public enum GameState { Gameing, Pause, End }
+public enum GameResult { Unknow, Win, Lose }
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
@@ -16,12 +16,12 @@ public class GameManager : MonoBehaviour
     public Tilemap tileMap;
     public float GameTime = 20.0f;
     public GameResult gameResult = GameResult.Unknow;
-    public int totalTime = 20*60;
-    public int restTime = 0;
+    public int totalTime = 20 * 60;
+    public int restTime = 20 * 60;
     public TextMeshProUGUI WinText;
 
     public GameObject player;
-    public Transform playerTransform; 
+    public Transform playerTransform;
     public GameObject MapPrefab;
 
     [Header("EnemyController")]
@@ -33,14 +33,18 @@ public class GameManager : MonoBehaviour
     [Header("LevelController")]
     public int MaxEnemyNum = 5;
     public int CurrentLevel = 1;
-    private void Awake()
+    public void Awake()
     {
         instance = this;
         restTime = totalTime;
         player = GameObject.FindWithTag("Player");
+        AudioManager.instance.PlayBgm(Config.bgm);
+    }
+
+    public void Start()
+    {
         gameState = GameState.Gameing;
         CreateEnemy_CircleWay();
-        AudioManager.instance.PlayBgm(Config.bgm);
     }
 
     public void Update()
@@ -49,16 +53,16 @@ public class GameManager : MonoBehaviour
         {
             Gameing();
         }
-        if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
-        {
-            gameState = GameState.Pause;
-            UIManager.Instance.ReturnToMenu();
-        }
-        if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
-        {
-            gameState = GameState.Gameing;
-            UIManager.Instance.ReturnToGame();
-        }
+        //if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    gameState = GameState.Pause;
+        //    UIManager.Instance.ReturnToMenu();
+        //}
+        //if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    gameState = GameState.Gameing;
+        //    UIManager.Instance.ReturnToGame();
+        //}
     }
 
     public void GameWin()
@@ -89,21 +93,21 @@ public class GameManager : MonoBehaviour
             CreateEnemy_CircleWay();
         }
     }
-    
+
     public void CreateEnemy_CircleWay()
     {
-        for (int i=0;i<MaxEnemyNum;i++)
+        for (int i = 0; i < MaxEnemyNum; i++)
         {
             float angle = 0, radius = 0;
             float x, y;
             Vector2 playerpos = new Vector2(playerTransform.position.x, playerTransform.position.y);
-            int EnemyType = Random.Range(0,3);
+            int EnemyType = Random.Range(0, 3);
             angle = Random.Range(0, 2 * Mathf.PI);
             radius = Random.Range(3.0f, 7.0f);
-            x = (float)Mathf.Cos(angle) * radius;y= (float)Mathf.Sin(angle) * radius;
-            foreach(Vector2 preenemy in EnemyPosList)
+            x = (float)Mathf.Cos(angle) * radius; y = (float)Mathf.Sin(angle) * radius;
+            foreach (Vector2 preenemy in EnemyPosList)
             {
-                while ((new Vector2(x,y)-preenemy).magnitude < 1.0f)
+                while ((new Vector2(x, y) - preenemy).magnitude < 3.0f)
                 {
                     angle = Random.Range(0, 2 * Mathf.PI);
                     radius = Random.Range(3.0f, 7.0f);
@@ -117,5 +121,5 @@ public class GameManager : MonoBehaviour
         EnemyPosList.Clear();
     }
 
-    
+
 }
