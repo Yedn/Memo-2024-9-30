@@ -83,11 +83,20 @@ public class Boomer : EnemyClass
         if (EnemyHp <= 0)
         {
             enemyState = EnemyState.attack;
+            direction.GetComponent<PlayerController>().HaveKillEnemy++;
         }
+    }
+
+    IEnumerator hitFlash()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public override void EnemyDie()
     {
+        GameManager.instance.EnemyList.Remove(this);
         Destroy(this.gameObject);
         GameObject go = GameObject.Instantiate(BoomerUIPrefab, transform.position,Quaternion.identity);
         Destroy(go, 0.5f);

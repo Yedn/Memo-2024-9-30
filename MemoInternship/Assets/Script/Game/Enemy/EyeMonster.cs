@@ -101,7 +101,15 @@ public class EyeMonster : EnemyClass
         if (EnemyHp <= 0)
         {
             enemyState = EnemyState.die;
+            direction.GetComponent<PlayerController>().HaveKillEnemy++;
         }
+    }
+
+    IEnumerator hitFlash()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public override void EnemyAttack()
@@ -127,8 +135,10 @@ public class EyeMonster : EnemyClass
 
     public override void EnemyDie()
     {
+        GameManager.instance.EnemyList.Remove(this);
         this.GetComponent<Animator>().SetTrigger("Die");
         this.GetComponent<Collider2D>().enabled = false;
+        BuildDrop();
         Destroy(this.gameObject, 1.5f);
     }
 }

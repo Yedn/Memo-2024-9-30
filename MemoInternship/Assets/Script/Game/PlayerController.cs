@@ -30,6 +30,15 @@ public class PlayerController : MonoBehaviour
     public int CurrentBulletNum;
     public float BulletRecoverDuration = 4.0f;
     public float BulletRecoverCurrentTime = 0.0f;
+
+    [Header("Skill")]
+    public float skillDurationTime = 10.0f;
+    public float skillTime = 0.0f;
+
+    [Header("PlayerLevel")]
+    private int PlayerLevel = 1;
+    public int NeedKillEnemy = 10;
+    public int HaveKillEnemy = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
                     break;
                 }
+            default:
                 break;
         }
     }
@@ -87,8 +97,28 @@ public class PlayerController : MonoBehaviour
         BulletRecover();
         LookAt();
         Attack();
+        SkillRecover();
+        LevelUp();
     }
 
+    public void LevelUp()
+    {
+        if (HaveKillEnemy == NeedKillEnemy)
+        {
+            PlayerLevel += 1;
+            Hp = 5;
+            HaveKillEnemy = 0;
+            NeedKillEnemy += 5;
+        }
+    }
+    
+    public void SkillRecover()
+    {
+        if (skillTime < skillDurationTime)
+        {
+            skillTime += Time.deltaTime;
+        }
+    }
     public void Attack()
     {
         shootTime += Time.deltaTime;
@@ -99,7 +129,6 @@ public class PlayerController : MonoBehaviour
                 Vector3 mousePosition = Input.mousePosition;
                 mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 mousePosition.z = 0;
-                float fireAngle = Vector2.Angle(mousePosition - this.transform.position, Vector2.up);
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
                 CurrentBulletNum -= 1;
                 UIManager.Instance.BulletNumUI(CurrentBulletNum);
@@ -117,16 +146,34 @@ public class PlayerController : MonoBehaviour
             canShoot = CanShoot.NotOK;
             BulletRecoverCurrentTime = 0.0f;
         }
+        if (Input.GetKeyDown("c") && skillTime >= skillDurationTime)
+        {
+            Skill();
+            canShoot = CanShoot.NotOK;
+            BulletRecoverCurrentTime = 0.0f;
+        }
     }
 
+    public void Skill()
+    {
+        for (; CurrentBulletNum >=0; CurrentBulletNum--)
+        {
+            shootTime = 0.0f;
+            float angle = Random.Range(0,Mathf.PI);
+            Bullet go = GameObject.Instantiate(bulletPrefab,this.transform.position, Quaternion.identity);
+            go.GetComponent<Rigidbody2D>().velocity = ((new Vector3(Mathf.Cos(angle),Mathf.Sin(angle),0)).normalized * bulletSpeed);
+            while(shootTime < 0.5f)
+            {
+                shootTime += Time.deltaTime;
+            }
+        }
+    }
     public void BulletRecover()
     {
 
         if (canShoot == CanShoot.NotOK)
         {
-            RecoverBullet_UsedDeltatime();
-            //Debug.Log("BulletNum:" + CurrentBulletNum.ToString());
-            //StartCoroutine("ReWrite_BulletRecover");
+            RecoverBullet_UsedDeltatime(); 
             if ((CurrentBulletNum == MaxBulletNum) || (Input.GetMouseButtonDown(0) && CurrentBulletNum > 0))
             {
                 canShoot = CanShoot.OK;
@@ -151,18 +198,6 @@ public class PlayerController : MonoBehaviour
             }
             BulletRecoverCurrentTime = 0;
         }
-    }
-
-    IEnumerator ReWrite_BulletRecover()
-    {
-
-        if (CurrentBulletNum >= MaxBulletNum)
-        {
-            canShoot = CanShoot.OK;
-            yield return null;
-        }
-        CurrentBulletNum++;
-        yield return new WaitForSeconds(3.0f);
     }
 
     public void WeaponMove()

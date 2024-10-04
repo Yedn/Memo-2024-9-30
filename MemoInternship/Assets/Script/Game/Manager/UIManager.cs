@@ -18,8 +18,8 @@ public class UIManager : MonoBehaviour
     public int restTime;
     public float timer;
     [Header("ResultUI")]
-    public TextMeshProUGUI WinText;
-    public TextMeshProUGUI LoseText;
+    public GameObject WinText;
+    public GameObject LoseText;
     [Header("BulletUI")]
     public TextMeshProUGUI BulletText;
     [Header("LevelUI")]
@@ -52,29 +52,33 @@ public class UIManager : MonoBehaviour
 
     public void BulletNumUI(int Num)
     {
-        BulletText.text = Num.ToString();
+        BulletText.text = Num.ToString() + " / 24";
         if (Num == 0)
         {
             BulletText.color = Color.red;
+        }
+        else
+        {
+            BulletText.color = Color.white;
         }
     }
 
     public void ShowStartText()
     {
-        WinText.enabled = false;
-        LoseText.enabled = false;
+        WinText.SetActive(false);
+        LoseText.SetActive(false);
     }
 
     public void ShowWinText()
     {
-        WinText.enabled = true;
-        LoseText.enabled = false;
+        WinText.SetActive(true);
+        LoseText.SetActive(false);
     }
 
     public void ShowLoseText()
     {
-        WinText.enabled = false;
-        LoseText.enabled = true;
+        WinText.SetActive(false);
+        LoseText.SetActive(true);
     }
 
     public void ChangeHpUI(float currentHp)

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 473572401
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 8efc77fa163bfa94d8ac1f5943d63972, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -124,16 +124,20 @@ MonoBehaviour:
   EnemyAtk: 0
   enemyState: 0
   enemyType: 1
+  direction: {fileID: 0}
+  distance: 0
+  DropsPrefabList:
+  - {fileID: 9190362894288793932, guid: 7fbff1e2e56493c4785782956b139466, type: 3}
+  - {fileID: 5716566548489925690, guid: bbb0ba8998303dc468b1cb40e0692ec2, type: 3}
   eyeMonster: {fileID: 3454262652269324531}
   BulletPrefab: {fileID: 8811333959704348869, guid: b71f1a44b5308e24ebcb817e87ec41e2, type: 3}
   EyeMonsterTransform: {fileID: 6726665654067735544}
   MoveSpeed: 0
-  MaxRadius: 7.5
-  MinRadius: 3.5
+  MaxRadius: 8
+  MinRadius: 3
   BulletSpeed: 1.5
   shootDuration: 3
   shootTime: 0
-  distance: 0
 --- !u!58 &2800322911526978139
 CircleCollider2D:
   m_ObjectHideFlags: 0

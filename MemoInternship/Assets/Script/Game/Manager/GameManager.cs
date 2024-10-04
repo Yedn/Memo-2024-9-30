@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         restTime = totalTime;
         player = GameObject.FindWithTag("Player");
         gameState = GameState.Gameing;
+        CreateEnemy_CircleWay();
     }
 
     public void Update()
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         {
             Gameing();
         }
+
     }
 
     public void GameWin()
@@ -93,67 +95,12 @@ public class GameManager : MonoBehaviour
                     x = (float)Mathf.Cos(angle) * radius; y = (float)Mathf.Sin(angle) * radius;
                 }
             }
-            GameObject go = GameObject.Instantiate(MonsterPrefabList[EnemyType], new Vector3(x, y, 0), Quaternion.identity);
+            GameObject go = GameObject.Instantiate(MonsterPrefabList[EnemyType], playerTransform.position + new Vector3(x, y, 0), Quaternion.identity);
             EnemyList.Add(go.GetComponent<EnemyClass>());
             EnemyPosList.Add(new Vector2(x, y));
         }
+        EnemyPosList.Clear();
     }
 
-    public void CreateEnemy()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            float x1 = 0; float y1 = 0;
-            MonsterNumber = Random.Range(2, 8);
-            for (int j = 0; j < MonsterNumber; j++)
-            {
-                int LeftRightUpDown = Random.Range(0, 4);//左右上下
-                switch (LeftRightUpDown)
-                {
-                    case 0: x1 = GameObject.FindWithTag("Player").transform.position.x - 9.5f; y1 = Random.Range(-8.5f, +8.5f); break;
-                    case 1: x1 = GameObject.FindWithTag("Player").transform.position.x + 9.5f; y1 = Random.Range(-8.5f, +8.5f); break;
-                    case 2: y1 = GameObject.FindWithTag("Player").transform.position.y + 5.5f; x1 = Random.Range(-10.0f, +10.0f); break;
-                    case 3: y1 = GameObject.FindWithTag("Player").transform.position.y - 5.5f; x1 = Random.Range(-10.0f, +10.0f); break;
-                }
-                if (i != 1)
-                {
-                    foreach (Vector2 prepos in EnemyPosList)
-                    {
-                        Vector2 playerPos = new Vector2(GameObject.FindWithTag("Player").transform.position.x, GameObject.FindWithTag("Player").transform.position.y);
-                        while (((x1 <= prepos.x + 0.5f && x1 >= prepos.x - 0.5f) && (y1 <= prepos.y + 2.0f && y1 >= prepos.y - 2.0f)) || ((new Vector2(x1, y1) - playerPos).magnitude < 3.0f || (new Vector2(x1, y1) - playerPos).magnitude > 6.0f))
-                        {
-                            switch (LeftRightUpDown)
-                            {
-                                case 0: y1 = Random.Range(-8.5f, +8.5f); break;
-                                case 1: y1 = Random.Range(-8.5f, +8.5f); break;
-                                case 2: x1 = Random.Range(-10.0f, +10.0f); break;
-                                case 3: x1 = Random.Range(-10.0f, +10.0f); break;
-                            }
-                        }
-                    }
-                }
-                else if (i == 1)//远程怪一定在视野范围内
-                {
-                    foreach (Vector2 prepos in EnemyPosList)
-                    {
-                        Vector2 playerPos = new Vector2(GameObject.FindWithTag("Player").transform.position.x, GameObject.FindWithTag("Player").transform.position.y);
-                        while (((x1 <= prepos.x + 0.5f && x1 >= prepos.x - 0.5f) && (y1 <= prepos.y + 2.0f && y1 >= prepos.y - 2.0f)) || ((new Vector2(x1, y1) - playerPos).magnitude < 3.0f || (new Vector2(x1, y1) - playerPos).magnitude > 6.0f))
-                        {
-                            switch (LeftRightUpDown)
-                            {
-                                case 0: y1 = Random.Range(-8.5f, +8.5f); break;
-                                case 1: y1 = Random.Range(-8.5f, +8.5f); break;
-                                case 2: x1 = Random.Range(-10.0f, +10.0f); break;
-                                case 3: x1 = Random.Range(-10.0f, +10.0f); break;
-                            }
-                        }
-                    }
-                }
-                GameObject go = GameObject.Instantiate(MonsterPrefabList[i], new Vector3(x1, y1, 0), Quaternion.identity);
-                EnemyList.Add(go.GetComponent<EnemyClass>());
-                EnemyPosList.Add(new Vector2(x1, y1));
-            }
-        }
-    }
-
+    
 }

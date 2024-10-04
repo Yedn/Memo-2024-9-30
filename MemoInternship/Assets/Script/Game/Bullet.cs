@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             Destroy(this.gameObject);
-            //Õâ±ßÒª×ö¿ÛÑª
+            //collision.GetComponent<EnemyClass>().GetHit(collision.GetComponent<Bullet>().atkValue);
             GameObject go = GameObject.Instantiate(bulletDestoryPrefab, transform.position, Quaternion.identity);
             Destroy(go, 0.5f);
         }
