@@ -6,8 +6,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public enum GameState { Gameing, Pause, End }
-public enum GameResult { Unknow, Win, Lose }
+public enum GameState { Gameing, Pause, End }//游戏状态
+public enum GameResult { Unknow, Win, Lose }//游戏结果
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public Tilemap tileMap;
     public float GameTime = 20.0f;
     public GameResult gameResult = GameResult.Unknow;
-    public int totalTime = 20 * 60;
+    public int totalTime = 20 * 60; //游戏倒计时20分钟
     public int restTime = 20 * 60;
     public TextMeshProUGUI WinText;
 
@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
         instance = this;
         restTime = totalTime;
         player = GameObject.FindWithTag("Player");
-
     }
 
     public void Start()
@@ -54,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             Gameing();
         }
-        if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape))
+        if (gameState == GameState.Gameing && Input.GetKeyDown(KeyCode.Escape)) //游戏中按ESC 暂停
         {
             gameState = GameState.Pause;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.pause;
@@ -64,11 +63,10 @@ public class GameManager : MonoBehaviour
             }
             UIManager.Instance.ReturnToMenu();
         }
-        else if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape))
+        else if (gameState == GameState.Pause && Input.GetKeyDown(KeyCode.Escape)) //暂停时按ESC 继续游戏
         {
             gameState = GameState.Gameing;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.game;
-
             UIManager.Instance.ReturnToGame();
             foreach (EnemyClass enemy in EnemyList)
             {
@@ -77,16 +75,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameWin()
+    public void GameWin() //游戏胜利
     {
         AudioManager.instance.PlayClip(Config.win_music);
-        UIManager.Instance.ShowWinText();
-        UIManager.Instance.ReturnToMenu();
+        UIManager.Instance.ShowWinText(); //显示胜利
+        UIManager.Instance.ReturnToMenu(); //放返回按钮
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().playerstate = Playerstate.pause;
         gameState = GameState.End;
     }
 
-    public void GameLose()
+    public void GameLose() //输了
     {
         AudioManager.instance.PlayClip(Config.lose_music);
         UIManager.Instance.ShowLoseText();
