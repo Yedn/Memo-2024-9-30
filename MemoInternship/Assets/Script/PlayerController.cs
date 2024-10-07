@@ -147,8 +147,7 @@ public class PlayerController : MonoBehaviour
                 mousePosition.z = 0;
 
                 Bullet go = GameObject.Instantiate(bulletPrefab, playerTransform.position, Quaternion.identity);
-                AudioManager.instance.PlayClip(Config.shoot);
-
+                AudioManager.instance.PlayClip(Config.shoot,1.7f);
                 CurrentBulletNum -= 1;
                 UIManager.Instance.BulletNumUI(CurrentBulletNum);
                 if (CurrentBulletNum <= 0)

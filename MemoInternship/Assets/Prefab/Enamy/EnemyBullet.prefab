@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 473572401
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 171cda88f9c5a644ebfe81aa47437095, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkValue: 1
   bulletSpeed: 5
-  bulletDestoryPrefab: {fileID: 7525049094146948570, guid: d8cc7a1185b53cc4aa106d49791fbfaa, type: 3}
+  bulletDestoryPrefab: {fileID: 7986042472345114854, guid: 5040122ea6f3e6845a97852579577d6f, type: 3}
   shootPoint: {x: 0, y: 0}
 --- !u!58 &4360141384221931704
 CircleCollider2D:

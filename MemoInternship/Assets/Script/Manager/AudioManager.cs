@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour //全局声音管理器
 {
     public static AudioManager instance { get; private set; }
     private AudioSource audioSource;
@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        //PlayBgm(Config.bgm);
+        PlayBgm(Config.bgm);
     }
     public void PlayBgm(string path)
     {
